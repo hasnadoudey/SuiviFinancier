@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow-project-description>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.9.2.201205070117-RELEASE]]></pluginVersion>
+	<configs>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/main/main-flow.xml</file>
+			<name><![CDATA[main]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/account/account-flow.xml</file>
+			<name><![CDATA[account]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/facture/facture-flow.xml</file>
+			<name><![CDATA[facture]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/fournisseur/fournisseur-flow.xml</file>
+			<name><![CDATA[fournisseur]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/marche/marche-flow.xml</file>
+			<name><![CDATA[marche]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/projet/projet-flow.xml</file>
+			<name><![CDATA[projet]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/operateur/operateur-flow.xml</file>
+			<name><![CDATA[operateur]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/ce/ce-flow.xml</file>
+			<name><![CDATA[ce]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/flows/reponsable/reponsable-flow.xml</file>
+			<name><![CDATA[responsable]]></name>
+		</config>
+	</configs>
+</webflow-project-description>

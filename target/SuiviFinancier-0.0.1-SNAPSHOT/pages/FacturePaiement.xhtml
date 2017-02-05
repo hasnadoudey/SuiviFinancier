@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+  
+
+</h:head>
+<body>
+ 
+   <div class="row space40"></div>     
+			
+ <!-- Header -->
+  <div id="header">
+  
+  <div id="greeting12">
+  
+        			    	 <section id="titlebar">
+	<!-- Container -->
+	<div class="container">
+	
+		<div class="eight columns">
+		
+		</div>
+		
+		<div class="eight columns">
+			<nav id="breadcrumbs">
+				
+					
+					<b>Bienvenue,</b> #{accountController.account.username} #{accountController.account.username} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+				
+			</nav>
+		</div>
+
+	</div>
+	<!-- Container / End -->
+</section>	
+        	</div>     	
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <h:form >
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                
+                <li><a href="#" title="" style="text-decoration:none"><span>Cadre Logique</span></a>
+                      			<ul> <!-- Submenu -->
+                    <li><a href="#{request.contextPath}/pages/ResponsableList.jsf" title="">Responsable</a></li>
+                     <li><a href="#{request.contextPath}/pages/OperateurList.jsf" title="">Opérateur</a></li>
+                     <li><a href="#{request.contextPath}/pages/FournisseurList.jsf" title="">Fournisseur</a></li>
+             </ul>
+                  </li>   
+            
+                
+                 <li><a href="#" title="" style="text-decoration:none"><span>Financement</span></a>
+                      			<ul> <!-- Submenu -->
+                     <li><a href="#{request.contextPath}/pages/FeList.jsf" title="">Financements Extérieurs</a></li>
+                      <li><a href="#{request.contextPath}/pages/EtatList.jsf" title="">Contribution de l'Etat</a></li>
+             </ul>
+                  </li>
+                  <li class="active"><a href="#{request.contextPath}/pages/FactureList.jsf" title="">Ordonnancement</a> </li>
+                   <li class="active"><a href="#{request.contextPath}/pages/FacturePaiementList.jsf" title="">Paiement</a></li>
+                   <li class="active"><a href="#{request.contextPath}/pages/Edition.jsf" title="">Edition</a> </li>
+	           </ul>
+          </nav>
+          </h:form>
+         </div> 
+         
+      </div> 
+      
+       <div class="row space40"></div>
+               <div class="slider1 flexslider">  <!-- Slider -->
+            <ul class="slides">
+              <li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/1.jpg" alt=""/>
+    	    		</li>
+    	    		<li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/2.jpg" alt=""/>
+    	    		</li>
+    	    	
+            </ul>
+          </div>  <!-- Slider End -->
+  </div> </div>
+         <h:form >
+              <center>
+                 <p:fieldset styleClass="fieldset" legend="Paiement Facture" >
+
+                 <p:focus />
+                 
+    <h:panelGrid  id="logPanelGrid" style="margin: 0 auto; margin-top: 25px; text-align: left" cellspacing="8" columns="8">
+             
+              <h:outputLabel value="Projet:" for="projet"></h:outputLabel>
+                                <h:selectOneMenu id="projet" value="#{factureBean.projetId}" required="true">
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{factureBean.projetList}"  />                                                    
+                                </h:selectOneMenu> 
+             
+             
+             
+              <h:outputLabel value="Operateur *:" for="operateur"></h:outputLabel>
+                                <h:selectOneMenu id="operateur" value="#{factureBean.operateurId}"  >
+                                 <f:selectItem itemLabel="Sélectionner" itemValue="" />
+                                 <f:selectItems  value="#{factureBean.opList}"  />                                                    
+                                </h:selectOneMenu> 
+               
+              
+              
+              <h:outputLabel  value=" Référence facture: *" />
+              <p:inputText value="#{factureBean.refFact}" required="true" label="Référence facture"/>
+              
+              <h:outputLabel  for="button1" value="Date de la facture *:" />
+              <p:calendar id="button1" value="#{factureBean.date_Fact}" mode="popup" size="8" showOn="button" /> 
+                            
+         
+             			   
+			 <h:outputLabel for="button2" value="Date réception Comptable interne :" />
+           <p:calendar id="button2" value="#{factureBean.date_Recep_Comptable_Inter}" showOn="button" />      
+              		
+   
+     		
+              		          
+                         <h:outputLabel value="Monnaie paiement:" for="Monnaie"></h:outputLabel>
+                                <h:selectOneMenu id="Monnaie" value="#{factureBean.deviseId}"  >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" />
+                                 <f:selectItems  value="#{factureBean.deviseList}"  />                                                    
+                                </h:selectOneMenu>  
+                          
+              		        <h:outputText value="Taux TVA %: " />
+                            <p:inputText value="#{factureBean.taux_TVA}" label="Taux TVA"/>   
+                            
+                            
+                            <h:outputText value="Total sur Fin Ext: " />
+                            <p:inputText value="#{factureBean.total_Fin_Ext}" label="Total sur Fin Ext"/> 
+ 
+              
+                      
+               			    <h:outputText value="Reférence Bordereau: " />
+                            <p:inputText value="#{factureBean.ref_Bordereau}"  label="Reférence Bordereau"/>           
+              	 
+             				
+             			  
+						   	<p:outputLabel for="button3" value="Date Réception :" />
+                            <p:calendar id="button3" value="#{factureBean.date_Recep}" showOn="button" />              
+              	
+              				
+            
+						   <p:outputLabel for="button4" value="Date d'envoi à la DAF:" />
+                            <p:calendar id="button4" value="#{factureBean.date_Envoi_DAF}" showOn="button" />             
+              		
+              		        
+              		 <h:outputLabel value="Type de prix:" for="Type"></h:outputLabel>
+                                <h:selectOneMenu id="Type" value="#{factureBean.prixId}"  >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" />
+                                 <f:selectItems  value="#{factureBean.prixList}"  />                                                    
+                                </h:selectOneMenu>  
+              		
+              		
+              		        <h:outputText value="Montant facture HT: " />
+                            <p:inputText value="#{factureBean.mnt_Fact_HT}"  label="Montant factureBean/Décompte HT"/> 
+                            
+                             <h:outputText value="Total sur trésor: " />
+                            <p:inputText value="#{factureBean.total_Tresor}"  label="Total sur trésor"/>  
+                            
+             
+              
+              	            <h:outputText value="Marché: *" />
+               				<p:inputText value="#{factureBean.marche}" required="true" label="Marché"/> 
+               				
+               				 <h:outputText value="N°ordre facture: " />
+                             <p:inputText value="#{factureBean.ordre_Fact}"  label="N°ordre facture"/> 
+               				
+               				
+						   <p:outputLabel for="button5" value="Date récep cellule Responsable :" />
+                            <p:calendar id="button5" value="#{factureBean.date_Recep_Cellule_Resp}" showOn="button" />   
+						   
+						  
+					       <p:outputLabel for="button6" value="Date récep Ordonnateur:" />
+                            <p:calendar id="button6" value="#{factureBean.date_Recep_Ordonnateur}" showOn="button" />           
+             
+					
+					        <h:outputText value="Montant facture TTC: * " />
+                            <p:inputText value="#{factureBean.mnt_Fact_TTC}" required="true" label="Montant facture/Décompte TTC"/> 
+                            
+                            
+                             <h:outputText value="Montant ordonnancé: " />
+                            <p:inputText value="#{factureBean.mnt_Ordonnance}"  label="Montant ordonnancé"/>          
+              	
+             			       
+              		         <h:outputText value="Total sur AF: " />
+                            <p:inputText value="#{factureBean.total_AF}"  label="Total sur AF"/>   
+             
+             
+             
+               			     <h:outputText value="Montant à payer: " />
+                           <p:inputText value="#{factureBean.mnt_Payer}"  label="Montant à payer"/> 
+              		  
+                    
+             <h:outputLabel for="four" value="compte fournisseur" />
+				<h:selectOneMenu id="four" value="#{factureBean.fournisseurId}" >
+				<f:selectItem itemLabel="Sélectionner" itemValue="" />
+				<f:selectItems  value="#{factureBean.fournisseurList}"  /> 
+				</h:selectOneMenu>
+                 
+                  <h:outputLabel for="etat" value="Etat" />
+				<h:selectOneMenu id="etat" value="#{factureBean.etatPaiementId}" >
+				<f:selectItem itemLabel="Sélectionner" itemValue="" />
+				<f:selectItems  value="#{factureBean.etatPaiementList}"  /> 
+				</h:selectOneMenu>
+				
+		  
+                             
+                             
+                 <h:outputLabel for="typeP" value="Type de paiement" />
+				<h:selectOneMenu id="typeP" value="#{factureBean.typePaiementId}" >
+				<f:selectItem itemLabel="Sélectionner" itemValue="" />
+				<f:selectItems  value="#{factureBean.typePaiementList}"  /> 
+				<f:ajax render="@form" />
+				</h:selectOneMenu>             
+                                
+               <h:panelGroup rendered="#{factureBean.typePaiementId == '1'}">
+               <h:outputText value="Montant Trésor à payer: " />
+               <p:inputText value="#{factureBean.mnt_Payer}"  label="Montant à payer"/> 
+               </h:panelGroup>
+
+                <h:panelGroup rendered="#{factureBean.typePaiementId == '1'}">
+                  <h:outputLabel for="compte" value="Compte"  />
+				<h:selectOneMenu id="compte" value="#{factureBean.compteId}" >
+				<f:selectItem itemLabel="Sélectionner" itemValue="" />
+				<f:selectItems  value="#{factureBean.compteList}"  /> 
+				</h:selectOneMenu>  
+               </h:panelGroup>
+               
+                <h:panelGroup rendered="#{factureBean.typePaiementId == '1'}">
+               	<p:outputLabel for="button9" value="Date de paiement sur trésor :" />
+                <p:calendar id="button9" value="#{factureBean.pai_sur_tresr}" showOn="button" /> 
+                   </h:panelGroup>
+                <h:panelGroup rendered="#{factureBean.typePaiementId == '1'}">
+               <h:outputText value="N°Virement/chèque: " />
+               <p:inputText value="#{factureBean.num_vir}"  label="Montant à payer"/> 
+               </h:panelGroup> 
+               
+              </h:panelGrid>   
+          
+              
+  <p:commandButton id="returnButton" action="FacturePaiementList?faces-redirect=true" value="Annuler" icon="ui-icon-closethick"  immediate="true" style="float:right" />       
+ <p:commandButton id="submitButton" style="float:right" actionListener="#{factureBean.addFacture}" action="FacturePaiementList?faces-redirect=true" icon="ui-icon-check" value="Valider"  ajax="false" />
+ 
+                       
+                            
+           
+                     </p:fieldset>
+           </center>
+              </h:form>
+           
+        </body>
+ </html>

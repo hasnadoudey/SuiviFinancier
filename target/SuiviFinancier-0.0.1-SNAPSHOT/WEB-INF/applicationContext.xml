@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd">
+        
+        <import resource="datasource-config.xml" />
+        <import resource="webflow-config.xml" /> 
+        <import resource="security-config.xml" /> 
+        
+        
+        
+        <!-- Beans Declaration -->
+        <bean id="Fe" class="tn.cni.domain.Fe" />
+       <bean id="Projet" class="tn.cni.domain.Projet" />
+        <bean id="Fournisseur" class="tn.cni.domain.Fournisseur" />
+        <bean id="Operateur" class="tn.cni.domain.Operateur" />
+        <bean id="Responsable" class="tn.cni.domain.Responsable" />
+        <bean id="Facture" class="tn.cni.domain.Facture" />
+      <bean id="EtatPaiement" class="tn.cni.domain.EtatPaiement" />
+        
+        
+        
+<!--             DAO declarations -->
+            <bean id="userDao" class="tn.cni.dao.UserJpaDao" /> 
+        
+        
+  <bean id="fournisseurDao" class="tn.cni.dao.FournisseurJpaDao" /> 
+        
+         <bean id="factureDao" class="tn.cni.dao.FactureJpaDao" /> 
+        
+ <bean id="projetDao" class="tn.cni.dao.ProjetJpaDao" />
+           
+       <bean id="operateurDao" class="tn.cni.dao.OperateurJpaDao" />
+         
+        <bean id="responsableDao" class="tn.cni.dao.ResponsableJpaDao" />
+         
+           <bean id="dao" class="tn.cni.dao.FeJpaDao" />
+         <bean id="etatDao" class="tn.cni.dao.EtatJpaDao" /> 
+         <bean id="daoEtatPaiement" class="tn.cni.dao.EtatPaiementJpaDao" /> 
+         
+         
+        
+        
+        
+        
+<!--         Services declarations -->
+        <bean id="userService" class="tn.cni.services.impl.UserServiceImpl"> 
+                <property name="userDao" ref="userDao" /> 
+     </bean>  
+ 
+        <bean id="factureService" class="tn.cni.services.impl.FactureServiceImpl"> 
+              <property name="factureDao" ref="factureDao" />
+       </bean>  
+        
+<bean id="etatPaiementService" class="tn.cni.services.impl.EtatPaiementServiceImpl"> 
+              <property name="daoEtatPaiement" ref="daoEtatPaiement" />
+       </bean>  
+        
+      
+        
+        
+    <bean id="operateurService" class="tn.cni.services.impl.OperateurServiceImpl">
+                 <property name="operateurdao" ref="operateurDao" />
+        </bean> 
+        
+    <bean id="responsableService" class="tn.cni.services.impl.ResponsableServiceImpl"> 
+              <property name="responsabledao" ref="responsableDao" /> 
+        </bean>   
+        
+        <bean id="fournisseurService" class="tn.cni.services.impl.FournisseurServiceImpl">
+                <property name="fournisseurdao" ref="fournisseurDao" />
+        </bean>  
+        <bean id="projetService" class="tn.cni.services.impl.ProjetServiceImpl">
+                <property name="projetdao" ref="projetDao" />
+        </bean>  
+       
+        <bean id="feService" class="tn.cni.services.impl.FeServiceImpl">
+                <property name="dao" ref="dao" />
+        </bean>  
+          <bean id="etatService" class="tn.cni.services.impl.EtatServiceImpl">
+                <property name="etatdao" ref="etatDao" />
+        </bean>  
+       
+      
+        <bean id="userAuthenticationProviderService" class="tn.cni.services.impl.UserAuthenticationProviderServiceImpl">
+        		<property name="authenticationManager"  ref="authenticationManager"/>
+        
+        </bean>
+      
+</beans>
+ 

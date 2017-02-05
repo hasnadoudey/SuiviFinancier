@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+  
+ <f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+	<f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+</h:head>
+<body>
+ 
+   <div class="row space40"></div>     
+			
+ <!-- Header -->
+  <div id="header">
+  
+  <div id="greeting12">
+  
+        			<c:if test="${not empty currentUser.name}">
+        				<b>Bienvenue,</b> ${user.firstName} ${user.lastName} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+        			</c:if>
+        	</div>     	
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <h:form >
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                
+                <li><a href="#" title="" style="text-decoration:none"><span>Cadre Logique</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link1" value="Responsable" action="menu1" /></li>
+                      <li><h:commandLink id="Link2" value="Opérateur" action="menu2" /></li>
+                       <li><h:commandLink id="Link3" value="Fournisseur" action="menu3" /></li>
+             </ul>
+                  </li>   
+                  
+                
+                 <li><a href="#" title="" style="text-decoration:none"><span>Financement</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link5" value="Financements Extérieurs" action="menu5" /></li>
+                      <li><h:commandLink id="Link6" value="Contribution de l'Etat" action="menu6" /></li>
+             </ul>
+                  </li>
+               <li class="active"><h:commandLink id="Link4" value="Ordonnancement" action="menu4" /></li>
+                   <li class="active"><h:commandLink id="Link7" value="Paiement" action="menu7" /></li>  
+                   <li class="active"><h:commandLink id="Link0" value="Edition" action="menu0" /></li>
+	           </ul>
+          </nav>
+          </h:form>
+         </div> 
+         
+      </div> 
+       
+       <div class="row space40"></div>
+               <div class="slider1 flexslider">  <!-- Slider -->
+            <ul class="slides">
+              <li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/1.jpg" alt=""/>
+    	    		</li>
+    	    		<li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/2.jpg" alt=""/>
+    	    		</li>
+    	    	
+            </ul>
+          </div>  <!-- Slider End -->
+  </div> </div>
+      <script>
+      function confirmer(){
+    	  return confirm("Etes vous sûr de vouloir supprimer ?")
+      }
+      
+      </script>
+      
+       <p:layoutUnit position="center">
+      
+    <h:form id="form">
+  
+    <p:tabView id="tabP" orientation="left" >
+     <p:tab title=" Fournisseurs" >
+    
+      <h:form id="form1">
+      <h:commandButton id="newt" image="/css/images/home1.png" action="last" style="float:right"/>
+       <p:commandButton id="deleteButton" icon="ui-icon-trash"  onclick="return confirmer();" actionListener="#{fournisseurBean.deleteFournisseur}" style="float:right" >
+     <f:param name="id" value="#{fournisseur.id}"></f:param>
+     </p:commandButton> 
+    
+      <p:commandButton process="four" icon="ui-icon-pencil"  update=":form:tabP:form1:multiFourModifDetail" oncomplete="PF('multiFourModifDialog').show()" style="float:right"/>
+      
+      <p:commandButton process="four"  icon="ui-icon-search"  update=":form:tabP:form1:multiFourDetail" oncomplete="PF('multiFourDialog').show()" style="float:right"/>     
+
+      <p:commandButton id="createButton" icon="ui-icon-plus" action="newfour" style="float:right"/>
+
+ <p:spacer height="40px;"></p:spacer>
+ 
+<p:dataTable id="four" var="fournisseurlis" value="#{fournisseurBean.fournisseurList}" paginator="true" paginatorPosition="bottom" 
+                              selectionMode="single"
+                             selection="#{fournisseurBean.selectedFournisseur}" rowKey="#{fournisseurlis.id}"
+                             filteredValue="#{fournisseurBean.filteredFournisseurs}"
+                             sortMode="single" style="width:100%" >
+
+                    <p:ajax event="rowSelect" listener="#{fournisseurBean.onFournisseurRowSelect}" /> 
+                    <p:ajax event="rowUnselect" listener="#{fournisseurBean.onFournisseurRowUnselect}" />
+   
+        <f:facet name="header">
+            Liste des Fournisseurs
+        </f:facet>
+   
+     <p:column filterBy="#{fournisseurlis.matricule}" headerText="Matricule Fiscal">
+        <h:outputText value="#{fournisseurlis.matricule}" />
+    </p:column>
+    
+     <p:column filterBy="#{fournisseurlis.nom}" headerText="Désignation">
+        <h:outputText value="#{fournisseurlis.nom}" />
+    </p:column>
+    
+    <p:column filterBy="#{fournisseurlis.adresse}" headerText="Type">
+        <h:outputText value="#{fournisseurlis.adresse}" />
+    </p:column>
+ 
+     
+    <p:column filterBy="#{fournisseurlis.mail}" headerText="E_mail">
+        <h:outputText value="#{fournisseurlis.mail}" />
+    </p:column>
+ 
+  <f:facet name="footer">
+               
+            </f:facet>    
+ 
+</p:dataTable>
+
+ <p:dialog header="Détails Fournisseur" widgetVar="multiFourDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiFourDetail" style="text-align:center;">
+            <ui:repeat value="#{fournisseurBean.selectedFournisseur}" var="fournisseurlis">
+               <p:panelGrid  columns="2" rendered="#{not empty fournisseurBean.selectedFournisseur}" columnClasses="label,value">
+                <f:facet name="header">
+                    Détails Projet
+                </f:facet>
+  
+                <h:outputText value="Matricule Fiscal:" style="width:10px" />
+                <h:outputText value="#{fournisseurBean.selectedFournisseur.matricule}" />
+ 
+ 				<h:outputText value="Désignation:" />
+                <h:outputText value="#{fournisseurBean.selectedFournisseur.nom}" />
+              
+                <h:outputText value="Type:" />
+                <h:outputText value="#{fournisseurBean.selectedFournisseur.adresse}" />
+  
+                <h:outputText value="Pays:" />
+                <h:outputText value="#{fournisseurBean.selectedFournisseur.pays}" />
+
+                <h:outputText value="Télephone:" />
+                <h:outputText value="#{fournisseurBean.selectedFournisseur.telephone}" />
+               
+                <h:outputText value="Fax:" />
+                <h:outputText value="#{fournisseurBean.selectedFournisseur.fax}" />
+                
+                
+            
+            </p:panelGrid>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog> 
+    
+  <p:dialog header="Fournisseur Sélectionné" widgetVar="multiFourModifDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiFourModifDetail" style="text-align:center;">
+            <ui:repeat value="#{fournisseurBean.selectedFournisseur}" var="fournisseurlis">     
+    
+<center>
+<p:fieldset styleClass="fieldset"  >
+                 <p:focus />
+                 
+    <h:panelGrid  id="logPanelGrid" style="margin: 0 auto; margin-top: 25px; text-align: right" cellspacing="8" columns="4">
+	
+	<h:outputLabel value="Projet:" for="projet"></h:outputLabel>
+                                <h:selectOneMenu id="projet" value="#{fournisseurBean.projetId}" >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{fournisseurBean.projetList}"  />                                                    
+                                </h:selectOneMenu> 
+	
+	
+	     <p:outputLabel for="matricule" value="Matricule Fiscal:"/><p:inputText id="matricule" value="#{fournisseurlis.matricule}" required="true" label="Matricule" title="Please enter your matricule"/>
+		 
+	 
+		<p:outputLabel for="Pays" value="Pays de Résidence : " /><p:autoComplete id="Pays" dropdown="true" value="#{fournisseurlis.country}" completeMethod="#{fournisseur.completeText}" /> 
+		                
+        <p:outputLabel for="taux" value="Taux de retenue de la source :"/>
+        <p:inputText id="taux" label="taux"  value="#{fournisseurlis.taux}"  required="true" />
+ 
+                            
+         <p:outputLabel for="nationalite" value="Nationalité:"/>
+         <p:inputText id="nationalite" value="#{fournisseurlis.nationalite}" label="nationalite"  required="true" />
+
+        <p:outputLabel for="fax" value="Fax:"/>
+        <p:inputText id="fax" value="#{fournisseurlis.fax}" label="fax"  required="true" title="Enter your fax!"/>
+ 
+                              
+        <p:outputLabel for="mail" value="E_mail:"/>
+         <p:inputText id="mail" value="#{fournisseurlis.mail}" required="true" label="mail" title="Enter your User Name!" />
+ 
+        <p:outputLabel value="Type" for="type:"/>
+                                <p:selectOneMenu id="type" value="#{fournisseurBean.typeId}"  >
+                                 <f:selectItem itemLabel="Sélectionner" itemValue="" />
+                                 <f:selectItems  value="#{fournisseurBean.typeList}"  />                                                    
+        </p:selectOneMenu>
+       
+        
+         <p:outputLabel for="adresse" value="Adresse :"/>
+        <p:inputTextarea id="adresse" rows="2" cols="30" value="#{fournisseurlis.adresse}" autoResize="false" />
+        
+        <p:outputLabel for="nom" value="Nom/Raison Sociale :"/>
+        <p:inputTextarea id="nom" rows="3" cols="30" value="#{fournisseurlis.nom}"  autoResize="false" /><br />
+   
+            
+
+                          
+            </h:panelGrid>   
+         
+                 
+           </p:fieldset>    
+                      
+             </center>      
+            </ui:repeat>
+  
+        </p:outputPanel>
+            <p:commandButton id="submitButton" action="modifFour"  icon="ui-icon-check" value="Sauvegarder"  ajax="false" />
+            <p:commandButton id="Annuler" action="backFour" immediate="true" icon="ui-icon-arrowreturnthick-1-w" value="Annuler" />  
+    </p:dialog>
+    
+ </h:form>
+</p:tab>
+      </p:tabView>     
+</h:form>
+</p:layoutUnit>
+</body>
+</html>
+        
+ 
+ 
+
+
+
+
+
+  

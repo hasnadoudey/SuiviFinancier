@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+ <!-- Database connection settings -->
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://127.6.83.130:3306/suivi</property>
+    <property name="connection.username">admine6f37PM</property>
+    <property name="connection.password">abH73LkGp_uK</property>
+
+       
+         <!-- JDBC connection pool (use the built-in) -->
+    <property name="connection.pool_size">1</property>
+
+    <!-- SQL dialect -->
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+
+    <!-- Disable the second-level cache  -->
+    <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql">true</property>
+    
+    <!-- update database -->
+    <property name="hbm2ddl.auto">validate</property>
+    
+   
+    <!-- model classes -->
+    
+    <mapping class="tn.cni.domain.Type"/>
+    <mapping class="tn.cni.domain.Projet"/>
+    <mapping class="tn.cni.domain.Operateur"/>
+    <mapping class="tn.cni.domain.Fe"/>
+    <mapping class="tn.cni.domain.Responsable"/>
+    <mapping class="tn.cni.domain.Facture"/>
+    <mapping class="tn.cni.domain.Composante"/>
+   
+    <mapping class="tn.cni.domain.Fournisseur"/>
+    <mapping class="tn.cni.domain.Devise"/>
+    <mapping class="tn.cni.domain.Prix"/>
+    <mapping class="tn.cni.domain.Country"/>
+    <mapping class="tn.cni.domain.Type"/>
+    <mapping class="tn.cni.domain.Stade"/>
+    <mapping class="tn.cni.domain.Secteur"/>
+  
+    <mapping class="tn.cni.domain.Etat"/>
+    <mapping class="tn.cni.domain.Contact"/>
+    <mapping class="tn.cni.domain.TypePaiement"/>
+    <mapping class="tn.cni.domain.Role"/>
+    <mapping class="tn.cni.domain.UserEntity"/>
+    <mapping class="tn.cni.domain.Nature"/>
+     <mapping class="tn.cni.domain.Ministere"/>
+     <mapping class="tn.cni.domain.Compte"/>
+     <mapping class="tn.cni.domain.EtatPaiement"/>
+     <mapping class="tn.cni.domain.TypePaiement"/>
+    <mapping class="tn.cni.domain.Account"/>
+    </session-factory>
+</hibernate-configuration>

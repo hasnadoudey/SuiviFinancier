@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+  
+
+</h:head>
+<body>
+ 
+   <div class="row space40"></div>     
+			
+ <!-- Header -->
+  <div id="header">
+  
+  <div id="greeting12">
+  
+        			    	 <section id="titlebar">
+	<!-- Container -->
+	<div class="container">
+	
+		<div class="eight columns">
+		
+		</div>
+		
+		<div class="eight columns">
+			<nav id="breadcrumbs">
+				
+					
+					<b>Bienvenue,</b> #{accountController.account.username} #{accountController.account.username} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+				
+			</nav>
+		</div>
+
+	</div>
+	<!-- Container / End -->
+</section>	
+        	</div>     	
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <h:form >
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                
+                <li><a href="#" title="" style="text-decoration:none"><span>Cadre Logique</span></a>
+                      			<ul> <!-- Submenu -->
+                    <li><a href="#{request.contextPath}/pages/ResponsableList.jsf" title="">Responsable</a></li>
+                     <li><a href="#{request.contextPath}/pages/OperateurList.jsf" title="">Opérateur</a></li>
+                     <li><a href="#{request.contextPath}/pages/FournisseurList.jsf" title="">Fournisseur</a></li>
+             </ul>
+                  </li>   
+            
+                
+                 <li><a href="#" title="" style="text-decoration:none"><span>Financement</span></a>
+                      			<ul> <!-- Submenu -->
+                     <li><a href="#{request.contextPath}/pages/FeList.jsf" title="">Financements Extérieurs</a></li>
+                      <li><a href="#{request.contextPath}/pages/EtatList.jsf" title="">Contribution de l'etat</a></li>
+             </ul>
+                  </li>
+                  <li class="active"><a href="#{request.contextPath}/pages/FactureList.jsf" title="">Ordonnancement</a> </li>
+                   <li class="active"><a href="#{request.contextPath}/pages/FacturePaiementList.jsf" title="">Paiement</a></li>
+                   <li class="active"><a href="#{request.contextPath}/pages/Edition.jsf" title="">Edition</a> </li>
+	           </ul>
+          </nav>
+          </h:form>
+         </div> 
+         
+      </div> 
+      
+      
+       <div class="row space40"></div>
+               <div class="slider1 flexslider">  <!-- Slider -->
+            <ul class="slides">
+              <li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/1.jpg" alt=""/>
+    	    		</li>
+    	    		<li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/2.jpg" alt=""/>
+    	    		</li>
+    	    	
+            </ul>
+          </div>  <!-- Slider End -->
+  </div> </div>
+               
+ <h:form id="ee">
+              <center>
+                 <p:fieldset styleClass="fieldset" legend="Financement sur Contribution de l'etat" >
+                 <p:focus />
+                 
+    <h:panelGrid  id="logPanelGrid" style="margin: 0 auto; margin-top: 25px; text-align: left" cellspacing="8" columns="4">
+
+                <h:outputLabel value="Projet:" for="projet"></h:outputLabel>
+                                <h:selectOneMenu id="projet" value="#{etatBean.projetId}" required="true">
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{etatBean.projetList}"  />                                                    
+                                </h:selectOneMenu> 
+                                
+					<h:outputLabel value="Référence Budgétaire :" />
+						<p:inputText id="id554" value="#{etatBean.ref}" required="true">
+							<f:validateLength minimum="4" />
+						</p:inputText>
+						
+						<h:outputLabel value="Montant :" />
+						<p:inputText id="id555" value="#{etatBean.mnt_initial}" required="true">
+							<f:validateLength minimum="4" />
+						</p:inputText>
+					
+					
+						<h:outputLabel value="Montant Actualisé :" />
+						<p:inputText id="id55" value="#{etatBean.mnt_act}" required="true">
+							<f:validateLength minimum="4" />
+						</p:inputText>
+						
+						
+						<p:outputLabel for="button" value="Date Actualisation :" />
+                         <p:calendar id="button" value="#{etatBean.dat_act}" showOn="button" />
+						
+						    
+             </h:panelGrid>   
+            <p:spacer height="60px;"></p:spacer>
+  <p:commandButton id="submitButton" action="EtatList?faces-redirect=true" immediate="true" icon="ui-icon-closethick" value="Annuler" style="float:right" />
+  <p:commandButton id="returnButton" actionListener="#{etatBean.addetat}" action="EtatList?faces-redirect=true" icon="ui-icon-check" value="Enregistrer"  ajax="false" style="float:right" /> 
+
+</p:fieldset>
+           </center>
+        </h:form>
+</body>
+</html>

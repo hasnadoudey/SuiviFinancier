@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+  
+ <f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+	<f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+</h:head>
+<body>
+ 
+   <div class="row space40"></div>     
+			
+ <!-- Header -->
+  <div id="header">
+  
+  <div id="greeting12">
+  
+        			<c:if test="${not empty currentUser.name}">
+        				<b>Bienvenue,</b> ${user.firstName} ${user.lastName} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+        			</c:if>
+        	</div>     	
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <h:form >
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                
+                <li><a href="#" title="" style="text-decoration:none"><span>Cadre Logique</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link1" value="Responsable" action="menu1" /></li>
+                      <li><h:commandLink id="Link2" value="Opérateur" action="menu2" /></li>
+                       <li><h:commandLink id="Link3" value="Fournisseur" action="menu3" /></li>
+             </ul>
+                  </li>   
+                  
+                
+                 <li><a href="#" title="" style="text-decoration:none"><span>Financement</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link5" value="Financements Extérieurs" action="menu5" /></li>
+                      <li><h:commandLink id="Link6" value="Contribution de l'Etat" action="menu6" /></li>
+             </ul>
+                  </li>
+               <li class="active"><h:commandLink id="Link4" value="Ordonnancement" action="menu4" /></li>
+                   <li class="active"><h:commandLink id="Link7" value="Paiement" action="menu7" /></li>  
+                   <li class="active"><h:commandLink id="Link0" value="Edition" action="menu0" /></li>
+	           </ul>
+          </nav>
+          </h:form>
+         </div> 
+         
+      </div> 
+      
+       <div class="row space40"></div>
+               <div class="slider1 flexslider">  <!-- Slider -->
+            <ul class="slides">
+              <li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/1.jpg" alt=""/>
+    	    		</li>
+    	    		<li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/2.jpg" alt=""/>
+    	    		</li>
+    	    	
+            </ul>
+          </div>  <!-- Slider End -->
+  </div> </div>
+      <script>
+      function confirmer(){
+    	  return confirm("Etes vous sûr de vouloir supprimer ?")
+      }
+      </script>
+     
+      
+    <h:form id="form">
+  
+    <p:tabView id="tab" orientation="left">
+     <p:tab title="Responsables">
+    
+      <h:form id="form1">
+      <h:commandButton id="newt" image="/css/images/home1.png" action="last" style="float:right"/>
+       <p:commandButton id="deleteButton" icon="ui-icon-trash"  onclick="return confirmer();" actionListener="#{respBean.deleteResponsable}" style="float:right" >
+     <f:param name="id" value="#{responsable.id}"></f:param>
+     </p:commandButton> 
+     
+      <p:commandButton process="res"   icon="ui-icon-pencil"  update=":form:tab:form1:multiResponsableModifDetail" oncomplete="PF('multiResponsableModifDialog').show()" style="float:right"/>
+      
+      
+      
+<p:commandButton process="res"  icon="ui-icon-search"  update=":form:tab:form1:multiResponsableDetail" oncomplete="PF('multiResponsableDialog').show()" style="float:right"/>     
+ <p:commandButton id="createButton" icon="ui-icon-plus" action="newresp" style="float:right"/>
+ 
+ <p:spacer height="40px;"></p:spacer>
+ 
+<p:dataTable id="res" var="responsableli" value="#{respBean.responsableList}" paginator="true" paginatorPosition="bottom" 
+                             selectionMode="single"
+                             selection="#{respBean.selectedResponsable}" rowKey="#{responsableli.id}"
+                             filteredValue="#{respBean.filteredResponsables}"
+                             sortMode="single" style="width:100%" >
+
+                    <p:ajax event="rowSelect" listener="#{respBean.onResponsableRowSelect}" /> 
+                    <p:ajax event="rowUnselect" listener="#{respBean.onResponsableRowUnselect}" />
+           
+                
+  <f:facet name="header">
+            Liste des responsables
+        </f:facet>         
+	               
+    <p:column filterBy="#{responsableli.nom}" headerText="Nom" style="width:110px">
+        <h:outputText value="#{responsableli.nom}" />
+    </p:column>
+    
+    <p:column filterBy="#{responsableli.prenom}" headerText="Prénom" style="width:110px">
+        <h:outputText value="#{responsableli.prenom}" />
+    </p:column>
+
+    <p:column filterBy="#{responsableli.fonction}" headerText="Fonction" style="width:110px">
+        <h:outputText value="#{responsableli.fonction}" />
+    </p:column>
+    
+ <p:column filterBy="#{responsableli.fax}" headerText="Fax" style="width:110px">
+        <h:outputText value="#{responsableli.fax}" />
+    </p:column>
+    
+    <p:column filterBy="#{responsableli.mail}" headerText="E_mail" style="width:110px">
+        <h:outputText value="#{responsableli.mail}" />
+    </p:column>
+    
+ <f:facet name="footer">
+
+                        
+            </f:facet>    
+    
+</p:dataTable>
+
+  <p:dialog header="Détails Responsable" widgetVar="multiResponsableDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiResponsableDetail" style="text-align:center;">
+            <ui:repeat value="#{respBean.selectedResponsable}" var="responsableli">
+                <p:panelGrid  columns="2" rendered="#{not empty respBean.selectedResponsable}" columnClasses="label,value">
+                <f:facet name="header">
+                    Détails Responable
+                </f:facet>
+
+                <h:outputText value="Nom:" style="width:10px" />
+                <h:outputText value="#{respBean.selectedResponsable.nom}" />
+ 
+ 				<h:outputText value="Fonction:" />
+                <h:outputText value="#{respBean.selectedResponsable.fonction}" />
+    
+              
+  
+                <h:outputText value="Tél:" />
+                <h:outputText value="#{respBean.selectedResponsable.tel}" />
+            
+                <h:outputText value="Fax: " />
+                <h:outputText value="#{respBean.selectedResponsable.fax}" />
+                
+                <h:outputText value="E-mail:" />
+                <h:outputText value="#{respBean.selectedResponsable.mail}" />
+               
+                 <h:outputText value="Prénom:" />
+                <h:outputText value="#{respBean.selectedResponsable.prenom}" />
+                
+                 <h:outputText value="Observation:" />
+                <h:outputText value="#{respBean.selectedResponsable.observation}" />
+            
+            </p:panelGrid>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog> 
+    
+    <p:dialog header="Responsable Sélectionné" widgetVar="multiResponsableModifDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiResponsableModifDetail" style="text-align:center;">
+            
+           
+                 <p:focus />
+                 
+    <h:panelGrid  id="PanelGrid" style="margin: 0 auto; margin-top: 25px; text-align: right" cellspacing="8" columns="4">
+	 <h:outputLabel value="Projet: *" for="projet"></h:outputLabel>
+                                <h:selectOneMenu id="projet" value="#{respBean.selectedResponsable.projetId}" >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{respBean.selectedResponsable.projetList}"  />                                                    
+                                </h:selectOneMenu> 
+	
+	<h:outputText  value=" Nom: *" /> <p:inputText value="#{respBean.selectedResponsable.nom}" required="true" /> 	 
+	 <h:outputText  value=" Prénom: *" /><p:inputText value="#{respBean.selectedResponsable.prenom}" required="true" /> 
+	 <h:outputText  value=" Fonction: *" /> <p:inputText value="#{respBean.selectedResponsable.fonction}" required="true"/> 
+ 
+      
+
+    <h:outputText  value=" Tél: *" /><p:inputText value="#{respBean.selectedResponsable.tel}" required="true" /> 
+ 
+                              
+   <h:outputText  value=" Fax: *" /><p:inputText value="#{respBean.selectedResponsable.fax}" required="true" /> 
+ 
+ 
+   
+  <h:outputText  value=" E-mail: *" /> <p:inputText value="#{respBean.selectedResponsable.mail}" required="true" /> 
+        
+
+        
+  <h:outputText  value=" Observation: " /> <p:inputText value="#{respBean.selectedResponsable.observation}" required="true"/>
+   
+                          
+            </h:panelGrid>   
+            <p:spacer height="60px;"></p:spacer>
+                       
+       
+           
+        </p:outputPanel>
+
+ <p:commandButton id="submitButton" action="modifResp" icon="ui-icon-check" value="Valider"  ajax="false" />
+ <p:commandButton id="returnButton" action="backResp" immediate="true" icon="ui-icon-arrowreturnthick-1-w" value="Annuler" />  
+    </p:dialog>
+ </h:form>
+</p:tab>
+
+          </p:tabView>  
+               
+</h:form>
+
+
+   
+        </body>
+ </html>

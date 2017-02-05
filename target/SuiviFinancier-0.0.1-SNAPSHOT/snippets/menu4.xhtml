@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+
+<head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+ 
+         
+	</head>
+	<body>
+ 
+  <!-- Header -->
+  <div id="header">
+  
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <div class="row space60"></div>
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                <li class="active"><a href="#{request.contextPath}/pages/ProjetList.jsf" title="">Programme</a></li>
+                <li><a href="#{request.contextPath}/pages/Fe.jsf" title=""><span>Resources</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><a href="#{request.contextPath}/pages/ResponsableList.jsf" title="">Responsable</a></li>
+                      <li><a href="#{request.contextPath}/pages/OperateurList.jsf" title="">Opérateur</a></li>
+                       <li><a href="#{request.contextPath}/pages/FournisseurList.jsf" title="">Fournisseur</a></li>
+             </ul>
+                  </li>   
+                  
+                
+                 <li><a href="#{request.contextPath}/pages/Fe.jsf" title=""><span>Financement</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><a href="#{request.contextPath}/pages/FeList.jsf" title="">Financements Extérieurs</a></li>
+                      <li><a href="#{request.contextPath}/pages/EtatList.jsf" title="">Contribution de l'Etat</a></li>
+             </ul>
+                  </li>
+               <li class="active"><a href="#{request.contextPath}/pages/FactureList.jsf" title="">Ordonnancement</a> </li>
+                   <li class="active"><a href="#{request.contextPath}/pages/FacturePaiementList.jsf" title="">Paiement</a></li>  
+                   
+	           </ul>
+          </nav>
+         </div> 
+      </div> 
+       <div class="row space40"></div>
+         
+  </div> 
+ 
+  
+</div>
+ <div id="content">
+				<ui:insert name="content" />
+			</div>
+  
+
+
+
+
+
+</body>
+
+
+
+</html>
+
+
+
+        
+         
+        
+         
+        
+         
+         
+       
+      
+        

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+<meta name="description" content="ucorpora demo - Free Business Corporate HTML Template"/>
+	<meta name="keywords" content="ucorpora, ucorpora demo, free, template, corporate, clean, modern, bootstrap, creative, design"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+ 
+        
+</h:head>
+<h:body>
+ 
+   <div class="row space40"></div>  
+			
+  <!-- Header -->
+  <div id="header">
+  	<div id="greeting12">
+        			<c:if test="${not empty currentUser.name}">
+        				<b>Bienvenue,</b> ${user.firstName} ${user.lastName} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+        			</c:if>
+        	</div>
+        	</div>
+        	 <div class="row space40"></div> 
+       	 <section id="titlebar">
+	<!-- Container -->
+	<div class="container">
+	
+		<div class="eight columns">
+		
+        <h:outputText value="#{fe.reference}" />
+ 
+		</div>
+		
+		<div class="eight columns">
+			
+		</div>
+	
+	</div>
+	<!-- Container / End -->
+</section>   
+   <h:form id="form">
+  
+    <p:tabView id="tabP" orientation="left">
+     <p:tab name="c">
+    
+      <h:form id="form1">
+         <h:commandButton id="pdf" action="newPdf" image="/css/images/pdf.png" style="float:left">
+               
+                <p:dataExporter type="pdf" target="pro" fileName="mypdf" />
+            </h:commandButton>
+              
+            <h:commandButton id="csv" image="/css/images/csv.png" style="float:left">               
+                <p:dataExporter type="csv" target="pro" fileName="mycsv" />
+            </h:commandButton>
+            <h:commandButton id="xml" image="/css/images/xml.png" style="float:left">               
+                <p:dataExporter type="xml" target="pro" fileName="myxml" />
+            </h:commandButton>
+            <h:commandButton id="xls" image="/css/images/xls.png" style="float:left">               
+                <p:dataExporter type="xls" target="pro" fileName="myxls" />
+            </h:commandButton>	
+            <h:commandButton id="newt" image="/css/images/next.png" action="newUser" style="float:right"/>
+        <p:commandButton  icon="ui-icon-signal" update=":form:tabP:form1:multiProjDetail1" oncomplete="PF('multiProjDialog1').show()" style="float:right"/>      
+       <p:commandButton id="deleteButton" icon="ui-icon-trash"  onclick="return confirmer();" actionListener="#{project.deleteProject}" style="float:right" >
+     <f:param name="id" value="#{projet.id}"></f:param>
+     </p:commandButton> 
+    
+      <p:commandButton process="pro" icon="ui-icon-pencil"  update=":form:tabP:form1:multiProjModifDetail" oncomplete="PF('multiProjModifDialog').show()" style="float:right"/>
+      
+      <p:commandButton process="pro"  icon="ui-icon-search"  update=":form:tabP:form1:multiProjDetail" oncomplete="PF('multiProjDialog').show()" style="float:right"/>     
+	<p:commandButton id="createButton1" icon="ui-icon-plus" action="newproj"  style="float:right"/>
+
+     
+      
+ 
+ <p:spacer height="40px;"></p:spacer>
+ 
+<p:dataTable id="pro" var="projectlis" value="#{project.projetList}" paginator="true" paginatorPosition="bottom" 
+                              selectionMode="single"
+                             selection="#{project.selectedProjet}" rowKey="#{projectlis.id}"
+                             sortMode="single" style="width:100%" 
+                             filteredValue="#{project.filteredProjects}"
+                             dblClickSelect="true"
+                             
+                             >
+
+                    <p:ajax event="rowSelect" listener="#{project.onProjetRowSelect}" /> 
+                    <p:ajax event="rowUnselect" listener="#{project.onProjetRowUnselect}" />
+            <p:ajax event="rowDblselect" listener="#{project.onRowDblClckSelect}" 
+    update=":form:tabP:form1:multiProjModifDetail" global="false" />
+  <f:facet name="header">
+            Liste des Projets
+        
+        </f:facet>
+        
+    
+    <p:column filterBy="#{projectlis.ref}" headerText="Référence" style="width:100px">
+        <h:outputText value="#{projectlis.ref}" />
+    </p:column>
+              
+    <p:column filterBy="#{projectlis.intitule}" headerText="Intitulé" style="width:110px">
+        <h:outputText value="#{projectlis.intitule}" />
+    </p:column>
+     
+    
+    
+    <p:column filterBy="#{projectlis.maitre_oeuvre}"  headerText="Maître d'oeuvre" style="width:110px">
+        <h:outputText value="#{projectlis.maitre_oeuvre}" />
+    </p:column> 
+    
+     <p:column filterBy="#{projectlis.cout}" headerText="Côut Total" style="width:110px">
+        <h:outputText value="#{projectlis.cout}" />
+    </p:column> 
+       
+  		   <f:facet name="footer">
+           
+            
+        </f:facet>
+</p:dataTable>
+
+     <p:dialog header="Details" widgetVar="multiProjDialog1" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1000">  
+       <p:outputPanel id="multiProjDetail1" style="text-align:center;">
+       
+       <p:chart type="bar" model="#{project.barModel}" style="height:300px"/>
+        <p:chart type="pie" model="#{project.pieModel}" style="height:300px"/>  
+       </p:outputPanel> 
+</p:dialog>
+           
+     
+          
+         
+            
+
+ 
+  
+
+
+ <p:dialog header="Détails Projet" widgetVar="multiProjDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="300">
+        <p:outputPanel id="multiProjDetail" style="text-align:center;">
+            <ui:repeat value="#{project.selectedProjet}" var="projectlis">
+               <p:panelGrid  columns="2" rendered="#{not empty project.selectedProjet}" columnClasses="label,value">
+                <f:facet name="header">
+                    Détails Projet
+                </f:facet>
+ 
+                <h:outputText value="Référence:" style="width:10px" />
+                <h:outputText value="#{project.selectedProjet.ref}" />
+ 
+ 				<h:outputText value="Intitule" />
+                <h:outputText value="#{project.selectedProjet.intitule}" />
+                
+                <h:outputText value="Maitre_ouvrage:" />
+                <h:outputText value="#{project.selectedProjet.maitre_ouvrage}" />
+ 
+                <h:outputText value="Maitre_oeuvre:" />
+                <h:outputText value="#{project.selectedProjet.maitre_oeuvre}" />
+
+               
+                
+                <h:outputText value="Côut Total:" />
+                <h:outputText value="#{project.selectedProjet.cout}" />
+                
+                 
+            
+            </p:panelGrid>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog> 
+    
+  <p:dialog header="Projet Sélectionné" widgetVar="multiProjModifDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiProjModifDetail" style="text-align:center;">
+            <ui:repeat value="#{project.selectedProjet}" var="projectlis">     
+    
+<center>
+        <h:panelGrid  id="logPanelGrid" style="margin: 0 auto; margin-top: 25px; text-align: left" cellspacing="9" columns="6">
+              
+                 	 
+              				 <h:outputText value="Référence Projet : *" />
+                            <p:inputText value="#{projectlis.ref}" required="true" />  
+                            
+                            
+                            <h:outputText value="Maître d'oeuvre *: " />
+                            <p:inputText value="#{projectlis.maitre_oeuvre}" maxlength="450" rows="2" cols="20" autoResize="false" style="width:200px;font-size: 14px;" tabindex="6" /> 
+                            
+                            
+                             <h:outputText value="Intitulé *: " />
+                            <p:inputText value="#{projectlis.intitule}" /> 
+                            
+                            
+                             <h:outputText value="Maître d'ouvrage délégué: " />
+                            <p:inputText value="#{projectlis.maitre_ouvrage}" /> 
+                            
+                            
+                            
+                             <h:outputLabel value="Monnaie Projet:" for="Monnaie"></h:outputLabel>
+                                <h:selectOneMenu id="Monnaie" value="#{project.deviseId}"  >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" />
+                                 <f:selectItems  value="#{project.deviseList}"  />                                                    
+                                </h:selectOneMenu>
+                                
+                                
+                            <h:outputText value="Côut Total* (TND): " />
+                            <p:inputText value="#{projectlis.cout}" />
+                            
+                           
+                             
+						    
+						<h:outputLabel value="Date Début *:" />
+						<p:calendar id="button1" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{projectlis.date_debut}" required="true" >
+						</p:calendar>      
+             			
+             			 
+             			
+             			   
+             			   
+						 <h:outputLabel value="Stade:" for="stade"></h:outputLabel>
+                                <h:selectOneMenu id="stade" value="#{projet.stadeId}"  >
+                                 <f:selectItem itemLabel="Selectionner" noSelectionOption="true" />
+                                 <f:selectItems  value="#{projet.stadeList}"  />                                                    
+                                </h:selectOneMenu>
+                                
+                                
+                 
+                                
+                                
+                                
+                                
+                                <h:outputLabel value="Secteur:" for="seteur"></h:outputLabel>
+                                <h:selectOneMenu id="seteur" value="#{projet.secteurId}" >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{projet.secteurList}"  />                                                    
+                                </h:selectOneMenu>
+                           
+                           
+                     
+           
+                   
+              		
+              		
+                                <h:outputLabel value="Nature:" for="nature"></h:outputLabel>
+                                <h:selectOneMenu id="nature" value="#{projet.natureId}" >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{projet.natureList}"  />                                                    
+                                </h:selectOneMenu>  		
+              		
+              		
+               			    <h:outputText value="Description : " />
+                            <p:inputText value="#{projectlis.description}"  />           
+              	 
+             				<h:outputText value="Maître d'ouvrage * : " />
+                            <p:inputText value="#{projectlis.maitre_ouvrage}"  />   
+                            
+                            
+                            <h:outputText value="Taux Rentabilité Economique : " />
+                            <p:inputText value="#{projectlis.taux_rent_economique}"  /> 
+                            
+                            
+                            <h:outputText value="Taux Rentabilité Interne Initial: " />
+                            <p:inputText value="#{projectlis.taux_rent_interne}"  /> 
+                            
+                            
+                            
+                            
+                             <h:outputText value="Côut Actualisé (TND): " />
+                            <p:inputText value="#{projectlis.cout_actualise}"  /> 
+                            
+             			  
+						   	             
+              	<h:outputLabel value="Date Actualisaion Côut :" />
+						<p:calendar id="button3" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{projectlis.date_act_cout}" required="true" >
+						</p:calendar>      
+             			
+              	
+               			 
+						    
+                            <h:outputLabel  value="Date Fin :" />
+						<p:calendar id="button4" value="#{projectlis.date_fin}" required="true" >
+						</p:calendar> 
+                            
+                                        
+              		<h:outputLabel  value="Date Fin Actualisée :" />
+						<p:calendar id="button5" value="#{projectlis.date_fin_actualise}" required="true" >
+						</p:calendar> 
+              		        
+              		<h:outputText value="Observations :" />
+                                <p:inputTextarea rows="5" cols="30" value="#{projectlis.observations}"  autoResize="false" />
+                                <h:outputText id="display" />
+                            
+                     
+               </h:panelGrid>   
+            <p:spacer height="60px;"></p:spacer>
+            
+            
+       
+</center>
+       </ui:repeat>
+        </p:outputPanel>
+        
+     <p:commandButton id="returnButton"  action="backProj"  icon="ui-icon-closethick" value="Annuler" type="reset"  immediate="false" style="float:right"/>
+        
+        <p:commandButton id="submitButton" action="modifProj"  icon="ui-icon-check" value="Sauvegarder"  ajax="false" style="float:right"/>
+    
+    </p:dialog>
+
+ </h:form>
+ 	 <section id="titlebar1">
+	<!-- Container -->
+	<div class="container">
+	
+		<div class="eight columns">
+		
+        <h:outputText value="#{fe.reference}" />
+ 
+		</div>
+		
+		<div class="eight columns">
+			<nav id="breadcrumbs">
+				<ul>
+					
+				
+				</ul>
+			</nav>
+		</div>
+	
+	</div>
+	<!-- Container / End -->
+</section> 
+</p:tab>
+      </p:tabView> 
+ 
+</h:form>
+
+</h:body>
+
+      </html>
+
+
+        
+         
+        
+         
+        
+         
+         
+       
+      
+        

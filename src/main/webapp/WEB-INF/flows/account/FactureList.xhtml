@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+  
+ <f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+	<f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+</h:head>
+<body>
+ 
+   <div class="row space40"></div>     
+			
+ <!-- Header -->
+  <div id="header">
+  
+  <div id="greeting12">
+  
+        			<c:if test="${not empty currentUser.name}">
+        				<b>Bienvenue,</b> ${user.firstName} ${user.lastName} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+        			</c:if>
+        	</div>     	
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <h:form >
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                
+                <li><a href="#" title="" style="text-decoration:none"><span>Cadre Logique</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link1" value="Responsable" action="menu1" /></li>
+                      <li><h:commandLink id="Link2" value="Opérateur" action="menu2" /></li>
+                       <li><h:commandLink id="Link3" value="Fournisseur" action="menu3" /></li>
+             </ul>
+                  </li>   
+                  
+                
+                 <li><a href="#" title="" style="text-decoration:none"><span>Financement</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link5" value="Financements Extérieurs" action="menu5" /></li>
+                      <li><h:commandLink id="Link6" value="Contribution de l'Etat" action="menu6" /></li>
+             </ul>
+                  </li>
+               <li class="active"><h:commandLink id="Link4" value="Ordonnancement" action="menu4" /></li>
+                   <li class="active"><h:commandLink id="Link7" value="Paiement" action="menu7" /></li>  
+                   <li class="active"><h:commandLink id="Link0" value="Edition" action="menu0" /></li>
+	           </ul>
+          </nav>
+          </h:form>
+         </div> 
+         
+      </div> 
+       
+       <div class="row space40"></div>
+               <div class="slider1 flexslider">  <!-- Slider -->
+            <ul class="slides">
+              <li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/1.jpg" alt=""/>
+    	    		</li>
+    	    		<li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/2.jpg" alt=""/>
+    	    		</li>
+    	    	
+            </ul>
+          </div>  <!-- Slider End -->
+  </div> </div>
+      <script>
+      function confirmer(){
+    	  return confirm("Etes vous sûr de vouloir supprimer ?")
+      }
+      </script>
+     
+      
+    <h:form id="form">
+    <p:tabView id="tab" orientation="left" >
+     <p:tab title=" Factures">
+   
+      <h:form id="form1">
+      <h:commandButton id="newt" image="/css/images/home1.png" action="last" style="float:right"/>
+       <p:commandButton id="deleteButton" icon="ui-icon-trash"  onclick="return confirmer();" actionListener="#{factureBean.deleteFacture}" style="float:right" >
+     <f:param name="id" value="#{facture.id}"></f:param>
+     </p:commandButton> 
+     
+      <p:commandButton process="fac"   icon="ui-icon-pencil"  update=":form:tab:form1:multiFactModifDetail" oncomplete="PF('multiFactModifDialog').show()" style="float:right"/>
+      
+<p:commandButton process="fac"  icon="ui-icon-search"  update=":form:tab:form1:multiFactDetail" oncomplete="PF('multiFactDialog').show()" style="float:right"/>     
+ <p:commandButton id="createButton" icon="ui-icon-plus" action="newfact" style="float:right"/>
+ 
+ <p:spacer height="40px;"></p:spacer>
+ 
+<p:dataTable id="fac" var="factureli" value="#{factureBean.factureList}" paginator="true" paginatorPosition="bottom" 
+                             selectionMode="single"
+                             selection="#{factureBean.selectedFacture}" rowKey="#{factureli.id}"
+                             filteredValue="#{factureBean.filteredFactures}"
+                             sortMode="single" style="width:100%" >
+
+                    <p:ajax event="rowSelect" listener="#{factureBean.onFactureRowSelect}" /> 
+                    <p:ajax event="rowUnselect" listener="#{factureBean.onFactureRowUnselect}" />
+           
+             
+  <f:facet name="header">
+            Liste des Factures
+        </f:facet>         
+ 
+    <p:column filterBy="#{factureli.refFact}" headerText="Référence facture" style="width:110px">
+        <h:outputText value="#{factureli.refFact}" />
+    </p:column>
+
+                         
+    <p:column filterBy="#{factureli.date_Fact}" headerText="Date facture" style="width:110px">
+        <h:outputText value="#{factureli.date_Fact}" />
+    </p:column>
+ 
+    
+    
+    
+    <p:column filterBy="#{factureli.marche}" headerText="Marché" style="width:110px">
+        <h:outputText value="#{factureli.marche}" />
+    </p:column>
+    
+   <p:column filterBy="#{factureli.mnt_Ordonnance}" headerText="Montant Ordonnancé" style="width:110px">
+        <h:outputText value="#{factureli.mnt_Ordonnance}" />
+    </p:column>
+    
+    <p:column filterBy="#{factureli.mnt_Fact_TTC}" headerText="Montant TTC" style="width:110px">
+        <h:outputText value="#{factureli.mnt_Fact_TTC}" />
+    </p:column>
+    
+ <f:facet name="footer">
+
+                        
+            </f:facet>    
+    
+</p:dataTable>
+
+  <p:dialog header="Détails Facture" widgetVar="multiFactDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiFactDetail" style="text-align:center;">
+            <ui:repeat value="#{factureBean.selectedFacture}" var="factureli">
+                <p:panelGrid  columns="2" rendered="#{not empty factureBean.selectedFacture}" columnClasses="label,value">
+                <f:facet name="header">
+                    Détails Facture
+                </f:facet>
+
+                <h:outputText value="Référence facture:" style="width:10px" />
+                <h:outputText value="#{factureBean.selectedFacture.refFact}" />
+ 
+ 				<h:outputText value="Date facture" />
+                <h:outputText value="#{factureBean.selectedFacture.date_Fact}" />
+    
+                
+  
+                <h:outputText value="Marché:" />
+                <h:outputText value="#{factureBean.selectedFacture.marche}" />
+            
+                <h:outputText value="Montant Ordonnancé:" />
+                <h:outputText value="#{factureBean.selectedFacture.mnt_Ordonnance}" />
+                
+                <h:outputText value="Montant TTC:" />
+                <h:outputText value="#{factureBean.selectedFacture.mnt_Ordonnance}" />
+               
+                 
+            
+            </p:panelGrid>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog> 
+    
+    <p:dialog header="Facture Sélectionnée" widgetVar="multiFactModifDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1000">
+        <p:outputPanel id="multiFactModifDetail" style="text-align:center;">
+            <ui:repeat value="#{factureBean.selectedFacture}" var="factureli">  
+             
+              <h:panelGrid  id="logPanelGrid" style="margin: 0 auto; margin-top: 25px; text-align: right" cellspacing="8" columns="6">
+             
+              <h:outputLabel value="Projet:" for="projet"></h:outputLabel>
+                                <h:selectOneMenu id="projet" value="#{factureBean.projetId}" >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{factureBean.projetList}"  />                                                    
+                                </h:selectOneMenu> 
+             
+             
+             
+              <h:outputLabel value="Operateur *:" for="operateur"></h:outputLabel>
+                                <h:selectOneMenu id="operateur" value="#{factureBean.operateurId}"  >
+                                 <f:selectItem itemLabel="Sélectionner" itemValue="" />
+                                 <f:selectItems  value="#{factureBean.opList}"  />                                                    
+                                </h:selectOneMenu> 
+              
+              <h:outputLabel  value=" Référence Facture/Décompte: *" />
+              <p:inputText value="#{factureli.refFact}" required="true" label="Référence Facture/Décompte"/>
+              
+              <h:outputLabel  for="button1" value="Date de la facture/décompte *:" />
+                            <p:calendar id="button1" value="#{factureli.date_Fact}" mode="popup" size="8" showOn="button" /> 
+                            
+         
+             			   
+						  <h:outputLabel for="button2" value="Date réception Comptable interne :" />
+                          <p:calendar id="button2" value="#{factureli.date_Recep_Comptable_Inter}" showOn="button" />      
+              		
+   
+                          <h:outputLabel value="Monnaie paiement:" for="Monnaie"></h:outputLabel>
+                                <h:selectOneMenu id="Monnaie" value="#{factureBean.deviseId}"  >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" />
+                                 <f:selectItems  value="#{factureBean.deviseList}"  />                                                    
+                                </h:selectOneMenu> 
+                        
+                          
+              		        <h:outputText value="Taux TVA %: " />
+                            <p:inputText value="#{factureli.taux_TVA}" label="Taux TVA"/>   
+                            
+                            
+                            <h:outputText value="Total sur Fin Ext: " />
+                            <p:inputText value="#{factureli.total_Fin_Ext}" label="Total sur Fin Ext"/> 
+ 
+              
+                           
+              		
+              		
+               			    <h:outputText value="Reférence Bordereau: " />
+                            <p:inputText value="#{factureli.ref_Bordereau}"  label="Reférence Bordereau"/>           
+              	 
+             				
+             			  
+						   	<p:outputLabel for="button3" value="Date Réception :" />
+                            <p:calendar id="button3" value="#{factureli.date_Recep}" showOn="button" />              
+              	
+              				
+						   <p:outputLabel for="button4" value="Date d'envoi à la DAF:" />
+                            <p:calendar id="button4" value="#{factureli.date_Envoi_DAF}" showOn="button" />             
+              		
+              		
+              		   <h:outputLabel value="Type de prix:" for="Type"></h:outputLabel>
+                                <h:selectOneMenu id="Type" value="#{factureBean.prixId}"  >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" />
+                                 <f:selectItems  value="#{factureBean.prixList}"  />                                                    
+                                </h:selectOneMenu>       
+              		
+              		
+              		
+              		        <h:outputText value="Montant Facture/Décompte HT: " />
+                            <p:inputText value="#{factureli.mnt_Fact_HT}"  label="Montant Facture/Décompte HT"/> 
+                            
+                             <h:outputText value="Total sur trésor: " />
+                            <p:inputText value="#{factureli.total_Tresor}"  label="Total sur trésor"/>  
+                            
+             
+              
+              	            <h:outputText value="Marché: *" />
+               				<p:inputText value="#{factureli.marche}" required="true" label="Marché"/> 
+               				
+               				 <h:outputText value="N°ordre Facture: " />
+                             <p:inputText value="#{factureli.ordre_Fact}"  label="N°ordre Facture"/> 
+               				
+               				
+						   <p:outputLabel for="button5" value="Date récep cellule Responsable :" />
+                            <p:calendar id="button5" value="#{factureli.date_Recep_Cellule_Resp}" showOn="button" />   
+						   
+						  
+					       <p:outputLabel for="button6" value="Date récep Ordonnateur:" />
+                            <p:calendar id="button6" value="#{factureli.date_Recep_Ordonnateur}" showOn="button" />           
+             
+					
+					        <h:outputText value="Montant Facture/Décompte TTC: * " />
+                            <p:inputText value="#{factureli.mnt_Fact_TTC}" required="true" label="Montant Facture/Décompte TTC"/> 
+                            
+                            
+                             <h:outputText value="Montant ordonnancé: " />
+                            <p:inputText value="#{factureli.mnt_Ordonnance}"  label="Montant ordonnancé"/>          
+              	
+             			       
+              		         <h:outputText value="Total sur AF: " />
+                            <p:inputText value="#{factureli.total_AF}"  label="Total sur AF"/>   
+             
+             
+             
+               			     <h:outputText value="Montant à payer: " />
+                           <p:inputText value="#{factureli.mnt_Payer}"  label="Montant à payer"/> 
+              		  
+            
+            
+                       <h:outputLabel for="four" value="compte fournisseur" />
+				<h:selectOneMenu id="four" value="#{factureBean.fournisseurId}" >
+				<f:selectItem itemLabel="Sélectionner" itemValue="" />
+				<f:selectItems  value="#{factureBean.fournisseurList}"  /> 
+				</h:selectOneMenu>      
+                
+                             
+                             
+                                <h:outputText value="Observations :" />
+                                <p:inputTextarea rows="3" cols="80" value="#{factureli.observations}"  autoResize="false" />
+                                <h:outputText id="display" />
+             
+            
+              </h:panelGrid>   
+            </ui:repeat>
+        </p:outputPanel>
+  <p:commandButton id="returnButton" action="backFact" icon="ui-icon-closethick" style="float:right" value="Annuler"  />  
+ <p:commandButton id="submitButton" action="modifFact"  icon="ui-icon-check" value="Valider" style="float:right" ajax="false" />
+ 
+    </p:dialog>
+ </h:form>
+        </p:tab>
+ 
+          </p:tabView>   
+</h:form>
+
+
+       
+   
+       
+        </body>
+ </html>

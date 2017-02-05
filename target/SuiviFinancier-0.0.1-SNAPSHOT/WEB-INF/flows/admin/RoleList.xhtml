@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+  
+ <f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+	<f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+</h:head>
+<body>
+ 
+   <div class="row space40"></div>     
+			
+ <!-- Header -->
+  <div id="header">
+  
+  <div id="greeting12">
+  
+        			<c:if test="${not empty currentUser.name}">
+        				<b>Bienvenue,</b> ${user.firstName} ${user.lastName} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+        			</c:if>
+        	</div>     	
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <h:form >
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                
+                
+             <li class="active"><a href="#{request.contextPath}/pages/UtilisateurList.jsf" title="">Utilisateur</a></li>
+                		
+                <li class="active"><a href="#{request.contextPath}/pages/RoleList.jsf" title="">Roles</a> </li>    
+               <li class="active"><a href="#{request.contextPath}/pages/Contact.jsf" title="">Contact</a></li> 
+	           </ul>
+          </nav>
+          </h:form>
+         </div> 
+         
+      </div> 
+       
+       <div class="row space40"></div>
+               <div class="slider1 flexslider">  <!-- Slider -->
+            <ul class="slides">
+              <li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/1.jpg" alt=""/>
+    	    		</li>
+    	    		<li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/2.jpg" alt=""/>
+    	    		</li>
+    	    	
+            </ul>
+          </div>  <!-- Slider End -->
+  </div> </div>
+
+  
+      <script>
+      function confirmer(){
+    	  return confirm("Etes vous sûr de vouloir supprimer ?")
+      }
+      </script>
+     
+      
+    <h:form id="form">
+  
+    <p:tabView id="tab" orientation="left" >
+     <p:tab title=" Financements Extérieurs">
+    
+      <h:form id="form1">
+      
+       <p:commandButton id="deleteButton" icon="ui-icon-trash"  onclick="return confirmer();" actionListener="#{feBean.deleteFe}" style="float:right" >
+     <f:param name="id" value="#{fe.id}"></f:param>
+     </p:commandButton> 
+     
+      <p:commandButton process="fes"   icon="ui-icon-pencil"  update=":form:tab:form1:multiFeModifDetail" oncomplete="PF('multiFeModifDialog').show()" style="float:right"/>
+      
+<p:commandButton process="fes"  icon="ui-icon-search"  update=":form:tab:form1:multiFeDetail" oncomplete="PF('multiFeDialog').show()" style="float:right"/>     
+ <p:commandButton id="createButton" icon="ui-icon-plus" action="Fe?faces-redirect=true" style="float:right"/>
+ 
+ <p:spacer height="40px;"></p:spacer>
+ 
+<p:dataTable id="fes" var="fe" value="#{feBean.feList}" paginator="true" paginatorPosition="bottom" 
+                             selectionMode="single"
+                             selection="#{feBean.selectedFe}" rowKey="#{fe.id}"
+                             sortMode="single" style="width:100%" >
+
+                    <p:ajax event="rowSelect" listener="#{feBean.onFeRowSelect}" /> 
+                    <p:ajax event="rowUnselect" listener="#{feBean.onFeRowUnselect}" />
+           
+             
+  <f:facet name="header">
+            Liste des Financements Extérieurs
+        </f:facet>         
+
+    <p:column headerText="Bailleur de fond" style="width:110px">
+        <h:outputText value="#{fe.bailleur}" />
+    </p:column>
+
+
+    <p:column headerText="Référence" style="width:110px">
+        <h:outputText value="#{fe.reference}" />
+    </p:column>
+ 
+    
+    <p:column headerText="Nature" style="width:110px">
+        <h:outputText value="#{fe.nature}" />
+    </p:column>
+    
+    <p:column headerText="Montant" style="width:110px">
+        <h:outputText value="#{fe.montant}" />
+    </p:column>
+    
+ 
+ <f:facet name="footer">
+
+                        
+            </f:facet>    
+    
+</p:dataTable>
+
+  <p:dialog header="Détails Fe" widgetVar="multiFeDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiFeDetail" style="text-align:center;">
+            <ui:repeat value="#{feBean.selectedFe}" var="fe">
+                <p:panelGrid  columns="2" rendered="#{not empty feBean.selectedFe}" columnClasses="label,value">
+                <f:facet name="header">
+                    Détails Financements Extérieurs
+                </f:facet>
+
+                <h:outputText value="Bailleur de fond:" style="width:10px" />
+                <h:outputText value="#{feBean.selectedFe.bailleur}" />
+ 
+ 				<h:outputText value="Référence" />
+                <h:outputText value="#{feBean.selectedFe.reference}" />
+    
+                <h:outputText value="Nature:" />
+                <h:outputText value="#{feBean.selectedFe.nature}" />
+  
+                <h:outputText value="Montant:" />
+                <h:outputText value="#{feBean.selectedFe.montant}" />
+            
+                <h:outputText value="N° Loi::" />
+                <h:outputText value="#{feBean.selectedFe.loi}" />
+                
+                <h:outputText value="Côut Total:" />
+                <h:outputText value="#{feBean.selectedFe.montant}" />
+               
+                 <h:outputText value="Taux change:" />
+                <h:outputText value="#{feBean.selectedFe.taux_change}" />
+            
+            </p:panelGrid>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog> 
+    
+    <p:dialog header="Financement Extérieur Sélectionné" widgetVar="multiFeModifDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+        <p:outputPanel id="multiFeModifDetail" style="text-align:center;">
+            <ui:repeat value="#{feBean.selectedFe}" var="fe">  
+             
+               
+              <p:panelGrid columns="2" > 
+              
+             				 <h:outputText value=" reference: " />
+              				 <p:inputText value="#{fe.reference}" />    
+              				 
+              				 <h:outputText value="Designation: " />
+                            <p:inputText value="#{fe.designation}"  /> 
+                            
+                             <h:outputText value="Montant: " />
+                            <p:inputText value="#{fe.montant}" />
+
+                            <h:outputText value="Taux change: " />
+                            <p:inputText value="#{fe.taux_change}" />
+                            
+                            <h:outputText value="Montant Actualisé: " />
+                            <p:inputText value="#{fe.mnt_actualise}" />  
+                            
+                            <h:outputText value="Bailleur de fond: " />
+                            <p:inputText value="#{fe.bailleur}" />   
+                            
+                            <h:outputText value="N° Loi: " />
+                            <p:inputText value="#{fe.loi}" />
+                    
+            </p:panelGrid>
+             </ui:repeat>
+        </p:outputPanel>
+            <p:commandButton id="submitButton" actionListener="#{feBean.addFe}"  icon="ui-icon-check" value="Sauvegarder"  ajax="false" />
+            <p:commandButton id="returnButton" action="FeList?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" value="Annuler" />  
+    </p:dialog>
+ </h:form>
+</p:tab>
+ <p:tab title="Financements sur Contribution de l'Etat(TND)">
+
+                <h:form id="form2">
+                </h:form>
+                </p:tab>
+ 
+
+              <center>
+              <p:focus />
+              <p:panelGrid columns="3" > 
+               
+              <p:panelGrid columns="2" > 
+              
+             				 <h:outputText value=" reference: " />
+              				 <p:inputText value="#{feBean.reference}" />    
+              				 
+              				 <h:outputText value="Designation: " />
+                            <p:inputText value="#{feBean.designation}"  /> 
+                            
+                             <h:outputText value="Montant: " />
+                            <p:inputText value="#{feBean.montant}" />
+
+                            <h:outputText value="Taux change: " />
+                            <p:inputText value="#{feBean.taux_change}" />
+                            
+                            <h:outputText value="Montant Actualisé: " />
+                            <p:inputText value="#{feBean.mnt_actualise}" />  
+                            
+                            <h:outputText value="Bailleur de fond: " />
+                            <p:inputText value="#{feBean.bailleur}" />   
+                            
+                            <h:outputText value="N° Loi: " />
+                            <p:inputText value="#{feBean.loi}" />
+                            
+                            
+                            	<h:outputLabel value="Date Entrée en Vigueur *:" />
+						<p:calendar id="button1" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_entree_Vigueur}" required="true" >
+						</p:calendar>      
+             			
+                          	<h:outputLabel value="Date clôture :" />
+						<p:calendar id="button2" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_cloture}"  >
+						</p:calendar>      
+             			  
+						
+                          
+                          	<h:outputLabel value="Date Dernier Engagement :" />
+						<p:calendar id="button3" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_dernier_engagement}" >
+						</p:calendar>      
+             			
+                          
+              				
+               			 <h:outputText value="Commission d'engagement: " />
+                            <p:inputText value="#{feBean.commission_Engagement}" />
+						       
+              			<h:outputLabel value="Date Dernier Paiement :" />
+						<p:calendar id="button4" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_dernier_pai}"  >
+						</p:calendar>      
+             			
+                            
+                            
+                            
+                            <h:outputText value="Observations :" />
+                                <p:inputTextarea rows="5" cols="30" value="#{feBean.observation}"  autoResize="false" />
+                                <h:outputText id="display" /> 
+                          
+                         
+                            
+                            
+                     
+            </p:panelGrid>
+            
+            
+            <p:panelGrid columns="2" > 
+              
+                           
+              		
+              		
+               			    <h:outputText value="Nature: " />
+                            <p:inputText value="#{feBean.nature}"  /> 
+                            
+                            
+              		        <h:outputText value="Monnaie: " />
+                            <p:inputText value="#{feBean.monnaie}" />   
+                            
+                            <h:outputText value="Montant en TND : " />
+                            <p:inputText value="#{feBean.monnaie_tnd}" /> 
+                          
+                          	<h:outputLabel value="Date Actualisation:" />
+						<p:calendar id="button5" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_actualisation}"  >
+						</p:calendar>      
+             			  
+             		
+                            
+             			 
+             			 	<h:outputLabel value="Date Signature:" />
+						<p:calendar id="button6" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_signature}"  >
+						</p:calendar>      
+             			
+                          
+                            
+                            	<h:outputLabel value="Date récep Loi:" />
+						<p:calendar id="button7" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_loi}"  >
+						</p:calendar>      
+             			
+                           <h:outputLabel value="Date Clôture Actualise:" />
+						<p:calendar id="button8" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_cloture_Actualise}"  >
+						</p:calendar>  
+                            
+                            
+                            
+                            
+                            	<h:outputLabel value="Date Dernier Engagement Actualise:"/>
+						<p:calendar id="button9" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_dernier_engagement_Actualise}"  >
+						</p:calendar>      
+             			
+                           
+                            
+                            	<h:outputLabel value="Date Dernier Paiement Actualise:" />
+						<p:calendar id="button10" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{feBean.date_dernier_pai_Actualise}" >
+						</p:calendar>      
+             			
+                         
+                            
+                             
+              		        <h:outputText value="Taux d'interêt: " />
+                            <p:inputText value="#{feBean.taux_interet}" />
+              		        		
+              		
+              		        <h:outputText value="Duree Remboursement: " />
+                            <p:inputText value="#{feBean.duree_remboursement}" /> 
+                            
+                             <h:outputText value="Délai de Grâce: " />
+                            <p:inputText value="#{feBean.delai_grace}" />  
+                            
+                
+              	     
+            </p:panelGrid>
+            
+           
+            </p:panelGrid>
+            
+              </center>
+             
+            
+            
+         
+ 
+  <p:commandButton styleClass="btn" actionListener="#{feBean.addFe}"  icon="ui-icon-check" value="Enregistrer"  ajax="false" />
+  <h:commandButton styleClass="btn btn-blue"  actionListener="#{feBean.cancelAction}"   value="Annuler"  />                          
+                            
+                            <p:spacer height="100px;"></p:spacer>
+                         
+         
+          
+          </p:tabView>            
+</h:form>
+
+
+    
+        </body>
+ </html>

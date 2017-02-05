@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:security="http://www.springframework.org/schema/security"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security.xsd">
+                           
+                           
+        <security:http auto-config="true">
+        	
+        	
+			<security:intercept-url pattern="/responsableMarche/**" access="ROLE_RESPONSABLEMARCHE" />
+			<security:intercept-url pattern="/chefProjet/**" access="ROLE_CHEFPROJET" />
+			<security:form-login login-page="/pages/login" default-target-url="/pages/login" />
+        	<security:logout logout-url="/app/logout" logout-success-url="/pages/login.jsf"/>
+        </security:http>                   
+                           
+                    
+                    
+         <security:authentication-manager>
+	        <security:authentication-provider user-service-ref="userService">	        
+	           <security:password-encoder hash="md5"/>
+	        </security:authentication-provider>
+	     </security:authentication-manager>
+           
+         <security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+<security:user name="hasna" password="hasna" authorities="ROLE_ADMIN" />
+<security:user name="responsablef" password="responsablef" authorities="ROLE_RESPONSABLEFINANCIER" />
+<security:user name="responsablem" password="responsablem" authorities="ROLE_RESPONSABLEMARCHE" />
+<security:user name="chef" password="chef" authorities="ROLE_CHEFPROJET" />
+			</security:user-service>
+		</security:authentication-provider>
+</security:authentication-manager>  
+           
+           
+           
+           
+           
+           
+           
+           
+           
+                           
+         <bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+         		<property name="userDetailsService" ref="userService"/>
+         		<property name="hideUserNotFoundExceptions" value="false"/>
+         
+         </bean>  
+         
+         <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+         	<constructor-arg>
+         		<ref local="daoAuthenticationProvider"/>
+         	</constructor-arg> 
+         </bean>        
+                   
+                 
+          <security:global-method-security secured-annotations="enabled"/>         
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                           
+                           
+ </beans>
+                           
+                           
+        
+          
+                           
+        

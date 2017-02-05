@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<link href="#{request.contextPath}/css/images/favicon.ico" rel="icon" type="image/png"/>
+
+  <!-- Styles -->
+  <link href="#{request.contextPath}/css/styles.css" rel="stylesheet"/>
+  <link href="#{request.contextPath}/css/bootstrap-override.css" rel="stylesheet"/>
+
+  <!-- Font Avesome Styles -->
+  <link href="#{request.contextPath}/css/font-awesome/font-awesome.css" rel="stylesheet"/>
+	
+
+ 
+  <link rel="stylesheet" href="#{request.contextPath}/css/flexslider.css" type="text/css" media="screen" />
+  
+ <f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+	<f:metadata>
+              <f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}" update="growlMessages" />
+         	  <f:attribute name="firstName" value="#{user.firstName}" />
+         	  <f:attribute name="lastName" value="#{user.lastName}" />
+         	
+         </f:metadata>
+</h:head>
+<body>
+ 
+   <div class="row space40"></div>     
+			
+ <!-- Header -->
+  <div id="header">
+  
+  <div id="greeting12">
+  
+        			<c:if test="${not empty currentUser.name}">
+        				<b>Bienvenue,</b> ${user.firstName} ${user.lastName} | <a href ="${request.contextPath}/app/logout"><img alt="" title="Logout" src="${request.contextPath}/resources/css/images/logout.png" /></a>
+        			</c:if>
+        	</div>     	
+    <div class="container">
+      <div class="row t-container">
+
+        <!-- Logo -->
+        <div class="span3">
+          <div class="logo">
+            <a href="#{request.contextPath}/css/index.htm"><img src="#{request.contextPath}/css/images/logo-header.png" alt=""/></a>
+          </div>            
+        </div>
+
+        <div class="span9">
+          <h:form >
+             <nav id="nav" role="navigation">
+               	<a href="#nav" title="Show navigation">Show navigation</a>
+	            <a href="#" title="Hide navigation">Hide navigation</a>
+	            <ul class="clearfix">
+                
+                <li><a href="#" title="" style="text-decoration:none"><span>Cadre Logique</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link1" value="Responsable" action="menu1" /></li>
+                      <li><h:commandLink id="Link2" value="Opérateur" action="menu2" /></li>
+                       <li><h:commandLink id="Link3" value="Fournisseur" action="menu3" /></li>
+             </ul>
+                  </li>   
+                  
+                
+                 <li><a href="#" title="" style="text-decoration:none"><span>Financement</span></a>
+                      			<ul> <!-- Submenu -->
+                      <li><h:commandLink id="Link5" value="Financements Extérieurs" action="menu5" /></li>
+                      <li><h:commandLink id="Link6" value="Contribution de l'Etat" action="menu6" /></li>
+             </ul>
+                  </li>
+               <li class="active"><h:commandLink id="Link4" value="Ordonnancement" action="menu4" /></li>
+                   <li class="active"><h:commandLink id="Link7" value="Paiement" action="menu7" /></li>  
+                   <li class="active"><h:commandLink id="Link0" value="Edition" action="menu0" /></li>
+	           </ul>
+          </nav>
+          </h:form>
+         </div> 
+         
+      </div> 
+       
+       <div class="row space40"></div>
+               <div class="slider1 flexslider">  <!-- Slider -->
+            <ul class="slides">
+              <li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/1.jpg" alt=""/>
+    	    		</li>
+    	    		<li>
+    	    	    <img src="#{request.contextPath}/css/images/slider/2.jpg" alt=""/>
+    	    		</li>
+    	    	
+            </ul>
+          </div>  <!-- Slider End -->
+  </div> </div>
+             <h:form id="ee">
+              <center>
+                 <p:fieldset styleClass="fieldset" legend="Fiche Projet" >
+
+                 <p:focus />
+                 
+    <h:panelGrid  id="logPanelGrid" style="margin: 0 auto; margin-top: 35px; text-align: left" cellspacing="9" columns="8">
+              
+                 	 
+              				 <h:outputText value="Référence Projet : *" />
+                            <p:inputText value="#{projet.ref}" required="true" />  
+                            
+                            
+                            <h:outputText value="Maître d'oeuvre *: " />
+                            <p:inputText value="#{projet.maitre_oeuvre}" maxlength="450" rows="2" cols="20" autoResize="false" style="width:200px;font-size: 14px;" tabindex="6" /> 
+                            
+                            
+                             <h:outputText value="Intitulé *: " />
+                            <p:inputText value="#{projet.intitule}" /> 
+                            
+                            
+                             <h:outputText value="Maître d'ouvrage délégué: " />
+                            <p:inputText value="#{projet.maitre_ouvrage}" /> 
+                            
+                            
+                            
+                             
+                                
+                                
+                            <h:outputText value="Côut Total* (TND): " />
+                            <p:inputText value="#{projet.cout}" />
+                            
+                           
+                             
+						    
+						<h:outputLabel value="Date Début *:" />
+						<p:calendar id="button1" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{projet.date_debut}" required="true" >
+						</p:calendar>      
+             			
+             			 
+             			
+             			   
+             			   
+						 <h:outputLabel value="Stade:" for="stade"></h:outputLabel>
+                                <h:selectOneMenu id="stade" value="#{project.stadeId}"  >
+                                 <f:selectItem itemLabel="Selectionner" noSelectionOption="true" />
+                                 <f:selectItems  value="#{project.stadeList}"  />                                                    
+                                </h:selectOneMenu>
+                                
+                                
+                 
+                                <h:outputLabel value="Secteur:" for="seteur"></h:outputLabel>
+                                <h:selectOneMenu id="seteur" value="#{project.secteurId}" >
+                                 <f:selectItem itemLabel="Selectionner" itemValue="" noSelectionOption="true"/>
+                                 <f:selectItems  value="#{project.secteurList}"  />                                                    
+                                </h:selectOneMenu>
+                           
+                           
+                      		
+              		
+              		
+               			    <h:outputText value="Description : " />
+                            <p:inputText value="#{projet.description}"  />           
+              	 
+             				<h:outputText value="Maître d'ouvrage * : " />
+                            <p:inputText value="#{projet.maitre_ouvrage}"  />   
+                            
+                            
+                            <h:outputText value="Taux Rentabilité Economique : " />
+                            <p:inputText value="#{projet.taux_rent_economique}"  /> 
+                            
+                            
+                            <h:outputText value="Taux Rentabilité Interne Initial: " />
+                            <p:inputText value="#{projet.taux_rent_interne}"  /> 
+                            
+                            
+                            
+                            
+                             <h:outputText value="Côut Actualisé (TND): " />
+                            <p:inputText value="#{projet.cout_actualise}"  /> 
+                            
+             			  
+						   	             
+              	<h:outputLabel value="Date Actualisaion Côut :" />
+						<p:calendar id="button3" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{projet.date_act_cout}" required="true" >
+						</p:calendar>      
+             			
+              	   
+               			 
+                      	<h:outputLabel value="Date Fin *:" />
+						<p:calendar id="button4" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{projet.date_fin}" required="true" >
+						</p:calendar>       
+                                      
+              		
+              		     
+              		 	<h:outputLabel value="Date Fin Actualisée:" />
+						<p:calendar id="button5" pattern="dd/MM/yyyy" size="15" navigator="true" style="width:250px;"
+							value="#{projet.date_fin_actualise}" required="true" >
+						</p:calendar>      
+              		        
+              		<h:outputText value="Observations :" />
+                                <p:inputTextarea rows="5" cols="30" value="#{projet.observations}"  autoResize="false" />
+                                <h:outputText id="display" />
+                            
+                     
+               </h:panelGrid>   
+            <p:spacer height="60px;"></p:spacer>
+            
+             <p:commandButton id="returnButton"  action="backProj"  icon="ui-icon-closethick" value="Annuler"  immediate="true" style="float:right"/>
+          <p:commandButton id="submitButton" action="newProj"  icon="ui-icon-check" value="Valider"  ajax="false" style="float:right"/>
+        
+
+       
+                     </p:fieldset>
+           </center>
+        </h:form>
+     </body>
+         </html>

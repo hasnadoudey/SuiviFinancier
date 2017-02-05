@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+<secured attributes="ROLE_USER"/>
+ <var name="facture" class="tn.cni.domain.Facture"/>
+ <var name="etat" class="tn.cni.domain.Etat"/>
+ <var name="responsable" class="tn.cni.domain.Responsable"/>
+ <var name="operateur" class="tn.cni.domain.Operateur"/>
+ <var name="fournisseur" class="tn.cni.domain.Fournisseur"/>
+ <var name="projet" class="tn.cni.domain.Projet"/>
+ <var name="fe" class="tn.cni.domain.Fe"/>
+ 
+ 
+ 
+	<var name="uiUtils" class="tn.cni.ui.utils.UIUtils"/>
+	
+	<on-start>
+	<evaluate expression="userService.loadUserEntityByUsername(currentUser.name)" result="flowScope.user"  />
+	
+	</on-start>
+
+	<view-state id="home" view="accountHome.xhtml">
+	<transition  on="newUser"  to="menu"/>
+	 <transition  on="newPdf"  to="menu"/>
+	
+	<transition  on="menu7"  to="pai"/>
+	<transition  on="newproj"  to="pro"/>
+	<transition on="backProj" to="home" />
+	 <transition on="modifProj" to="home">
+    <evaluate expression="projetService.edit(projet)" />
+    </transition>
+	</view-state>
+	
+	<view-state id="pro" view="Projet.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="backProj" to="home" />
+	 <transition on="newProj" to="home">
+    <evaluate expression="projetService.add(projet)" />
+    </transition>
+	</view-state>
+	
+	
+	<view-state id="menu" view="menu5.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	</view-state>
+	
+   
+	
+	<view-state id="resp" view="ResponsableList.xhtml" model="responsable" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="last" to="pre" />
+	<transition  on="newresp"  to="respon"/>
+	<transition on="backResp" to="resp" />
+	 <transition on="modifResp" to="resp">
+	 
+    <evaluate expression="responsableService.edit(responsable)"/>
+    </transition>
+	</view-state>
+		<view-state id="respon" view="Responsable.xhtml" model="responsable">
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="backResp" to="resp" />
+	 <transition on="newResp" to="resp">
+	<evaluate expression="responsableService.add(responsable)" />
+	</transition>
+	</view-state>
+	
+	<view-state id="op" view="OperateurList.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="last" to="pre" />
+	<transition  on="newop"  to="opp"/>
+	<transition on="backOp" to="op" />
+	<transition on="modifOp" to="op">
+    <evaluate expression="operateurService.edit(operateur)" />
+    </transition>
+	</view-state>
+		<view-state id="opp" view="Operateur.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="backOp" to="op" />
+	 <transition on="newOp" to="op">
+	<evaluate expression="operateurService.add(operateur)" />
+	</transition>
+	</view-state>
+	
+	
+	<view-state id="four" view="FournisseurList.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="last" to="pre" />
+	<transition  on="newfour"  to="fourni"/>
+	<transition on="backFour" to="four" />
+	 <transition on="modifFour" to="four">
+    <evaluate expression="fournisseurService.edit(fournisseur)" />
+    </transition>
+	</view-state>
+		<view-state id="fourni" view="Fournisseur.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="backFour" to="four" />
+	 <transition on="newFour" to="four">
+	<evaluate expression="fournisseurService.add(fournisseur)" />
+	</transition>
+	</view-state>
+	
+	
+	
+	<view-state id="fact" view="FactureList.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+		<transition on="last" to="pre" />
+	<transition  on="newfact"  to="factu"/>
+	<transition on="backFact" to="fact" />
+	 <transition on="modifFact" to="fact">
+    <evaluate expression="factureService.edit(facture)" />
+    </transition>
+	</view-state>
+	<view-state id="factu" view="Facture.xhtml" model="facture" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+
+	<transition on="backFact" to="fact" />
+	 <transition on="newFact" to="fact">
+	<evaluate expression="factureService.add(facture)" />
+	</transition>
+	</view-state>
+	<view-state id="fee" view="FeList.xhtml"  model="fe"  >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="last" to="pre" />
+	<transition  on="newfe"  to="fie"/>
+	<transition on="backFe" to="fee" />
+	 <transition on="mofdifFe" to="fee">
+    <evaluate expression="feService.edit(fe)" />
+    </transition>
+	</view-state>
+ 
+		<view-state id="fie" view="Fe.xhtml" model="fe"  >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="backFe" to="fee" />
+	 <transition on="newFe" to="fee">
+    <evaluate expression="feService.add(fe)" />
+    </transition>
+	</view-state>
+	
+	<view-state id="etatt" view="EtatList.xhtml" model="etat">
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="last" to="pre" />
+	<transition  on="newetat"  to="eta"/>
+	<transition on="backetat" to="etatt" />
+	 <transition on="modifEtat" to="etatt">
+    <evaluate expression="etatService.edit(etat)" />
+    </transition>
+	</view-state>
+		<view-state id="eta" view="Etat.xhtml" model="etat" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="backetat" to="etatt" />
+	 <transition on="confirmetat" to="etatt">
+    <evaluate expression="etatService.add(etat)" />
+    </transition>
+	</view-state>
+	<view-state id="pai" view="FacturePaiementList.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition  on="newpai"  to="paie"/>
+	<transition on="backPai" to="pai" />
+	<transition on="last" to="pre" />
+	 <transition on="modifPai" to="pai">
+    <evaluate expression="factureService.edit(facture)" />
+    </transition>
+	</view-state>
+	
+	<view-state id="pre" view="accountHome.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="last" to="pre" />
+	<transition  on="newUser"  to="menu"/>
+	</view-state>
+		<view-state id="paie" view="FacturePaiement.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+	<transition on="backPai" to="pai" />
+	 <transition on="modifPai" to="pai">
+    <evaluate expression="factureService.add(facture)" />
+    </transition>
+	</view-state>
+	<view-state id="proj" view="projetList.xhtml" >
+	<transition  on="menu0"  to="proj"/>
+	<transition  on="menu1"  to="resp"/>
+	<transition  on="menu2"  to="op"/>
+	<transition  on="menu3"  to="four"/>
+	<transition  on="menu4"  to="fact"/>
+	<transition  on="menu5"  to="fee"/>
+	<transition  on="menu6"  to="etatt"/>
+	<transition  on="menu7"  to="pai"/>
+		<transition on="last" to="pre" />
+	<transition  on="newproj"  to="pro"/>
+	<transition on="backProj" to="proj" />
+	 <transition on="modifProj" to="proj">
+    <evaluate expression="projetService.edit(projet)" />
+    </transition>
+	</view-state>
+	
+		<end-state id="last1" view="externalRedirect:accountHome"/>
+		<end-state id="newUser" view="externalRedirect:menu5"/>
+	    <end-state id="menu2" view="externalRedirect:OperateurList"/>
+	    <end-state id="menu1" view="externalRedirect:ResponsableList"/>
+	    <end-state id="menu3" view="externalRedirect:FournisseurList"/>
+	    <end-state id="menu4" view="externalRedirect:FactureList"/>
+	    <end-state id="menu5" view="externalRedirect:FeList"/>
+	    <end-state id="menu6" view="externalRedirect:EtatList"/>
+	    <end-state id="menu7" view="externalRedirect:FacturePaiementList"/>
+	    <end-state id="menu0" view="externalRedirect:projetList"/>
+	    <end-state id="newfact" view="externalRedirect:Facture"/>
+	    <end-state id="newetat" view="externalRedirect:Etat"/>
+	    <end-state id="newfe" view="externalRedirect:Fe"/>
+	    <end-state id="newresp" view="externalRedirect:Responsable"/>
+	    <end-state id="newproj" view="externalRedirect:Projet"/>
+	    <end-state id="newpai" view="externalRedirect:FacturePaiement"/>
+	    <end-state id="newop" view="externalRedirect:Operateur"/>
+	    <end-state id="newfour" view="externalRedirect:Fournisseur"/>
+	    <end-state id="last" view="externalRedirect:FacturePaiementList"/>
+</flow>

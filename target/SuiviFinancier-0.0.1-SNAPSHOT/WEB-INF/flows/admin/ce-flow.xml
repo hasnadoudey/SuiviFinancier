@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+<secured attributes="ROLE_USER"/>
+ <var name="utilisateur" class="tn.cni.domain.UserEntity"/>
+ <var name="role" class="tn.cni.domain.Role"/>
+ <var name="contact" class="tn.cni.domain.Contact"/>
+ 
+ 
+ 
+	<var name="uiUtils" class="tn.cni.ui.utils.UIUtils"/>
+	
+	<on-start>
+	<evaluate expression="userService.loadUserEntityByUsername(currentUser.name)" result="flowScope.user"  />
+	
+	</on-start>
+
+
+	
+
+		<view-state id="use" view="UtilisateurList.xhtml" >
+	
+	<transition  on="menu4"  to="use"/>
+	
+	<transition on="backPai" to="pai" />
+	 <transition on="modifPai" to="pai">
+    <evaluate expression="factureService.add(user)" />
+    </transition>
+	</view-state>
+	<view-state id="userr" view="Utilisateur.xhtml" >
+	
+	<transition  on="menu4"  to="use"/>	
+	<transition  on="newproj"  to="pro"/>
+	<transition on="backProj" to="proj" />
+	 <transition on="modifProj" to="proj">
+    <evaluate expression="userService.edit(user)" />
+    </transition>
+	</view-state>
+	
+		
+	    <end-state id="menu4" view="externalRedirect:UtilisateurList"/> 
+	    <end-state id="menu7" view="externalRedirect:RoleListList"/>
+	    <end-state id="menu0" view="externalRedirect:ContactList"/>
+	    <end-state id="newuser" view="externalRedirect:Utilisateur"/>
+	    <end-state id="newrole" view="externalRedirect:Role"/>
+	    
+</flow>

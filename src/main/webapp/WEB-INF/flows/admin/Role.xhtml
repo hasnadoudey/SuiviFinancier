@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template1.xhtml">
+                
+                 <ui:define name="content">
+             <h:head></h:head>     
+<h:form >
+ <center>
+  <p:fieldset styleClass="fieldset" legend="Nouveau Rôle" >
+                 <p:focus />
+                 
+    <h:panelGrid  id="logPanelGrid" style="margin: 0 auto; margin-top: 25px; text-align: right" cellspacing="8" columns="3">
+                                
+                                 <h:panelGroup>
+                                        <h:outputText value="Id:" />
+                                        <h:outputText style="color:red" value="*  " />
+                                </h:panelGroup>
+                                <p:inputText id="firstName" label="First Name"  value="#{roleBean.id}"  required="true" title="Enter your First Name!">
+                                        <f:validateLength minimum="2" />
+                                        <p:ajax event="keyup" update="firstNameMsg" global="false"/>
+                                </p:inputText>
+                                <h:panelGroup>
+                                		<p:message id="firstNameMsg" for="firstName"/>
+                                        <p:tooltip for="firstName" styleClass="tooltip" showEvent="focus" hideEvent="blur" />
+								</h:panelGroup>
+                                <h:panelGroup>
+                                        <h:outputText value="Nom:" />
+                                        <h:outputText style="color:red" value="*  " />
+                                </h:panelGroup>
+                                <p:inputText id="lastName" value="#{userBean.lastName}" label="Last Name"  required="true" title="Enter your Last Name!">
+                                        <f:validateLength minimum="2" />
+                                        <p:ajax event="keyup" update="lastNameMsg" global="false"/>
+                                </p:inputText>
+                                <h:panelGroup>
+                                		<p:message id="lastNameMsg" for="lastName"/>
+                                        <p:tooltip for="lastName" styleClass="tooltip" showEvent="focus" hideEvent="blur" />
+                                
+                                </h:panelGroup>
+                               
+                                <h:panelGroup>
+                                        <h:outputText value="Nom utilisateur:" />
+                                        <h:outputText style="color:red" value="*  " />
+                                </h:panelGroup>
+                                <p:inputText id="userName" value="#{userBean.userName}" required="true" label="User Name" title="Enter your User Name!" >
+                                <f:validateLength minimum="2" />
+                                <p:ajax event="keyup" update="userNameMsg" global="false" listener="#{userService.checkAvailable}"/>
+                                
+                                </p:inputText>
+                                <h:panelGroup>
+                                		<p:message id="userNameMsg" for="userName"/>
+                                		<p:tooltip for="userName" styleClass="tooltip" showEvent="focus" hideEvent="blur" />
+                                </h:panelGroup>
+                                
+                                <h:panelGroup>
+                                        <h:outputText value="Mot de passe:" />
+                                        <h:outputText style="color:red" value="*  " />
+                                </h:panelGroup>
+                                <p:password id="pass1" value="#{userBean.password}" required="true" label="Password" title="Please enter a password!"  feedback="true" match="pass2">
+                                <f:validateLength minimum="2" />
+                                
+                                </p:password>
+                               <p:message id="pass1Msg" for="pass1"/>
+                               
+                               <h:panelGroup>
+                                        <h:outputText value="Repeat Password:" />
+                                        <h:outputText style="color:red" value="*  " />
+                                </h:panelGroup>
+                                <p:password id="pass2"  required="true" label="Password" title="Please enter a password!" />
+                                <p:message id="pass2Msg" for="pass2"/>
+                                <h:outputText value="" />
+                                
+                                
+                                <h:panelGroup>
+                                        <h:outputLabel value="Rôle:" for="role:" />
+                                        <h:outputText style="color:red" value="*  " />
+                                </h:panelGroup>
+                                 
+                                <h:selectOneMenu id="role" value="#{userBean.roleId}"  >
+                                 <f:selectItem itemLabel="Sélectionner" itemValue="" />
+                                 <f:selectItems  value="#{userBean.roleList}"  />                                                    
+                                 </h:selectOneMenu>
+           
+                                
+                        </h:panelGrid>
+ 
+   <p:commandButton id="submitButton" actionListener="#{userBean.addUser}" action="UtilisateurList?faces-redirect=true" icon="ui-icon-check" value="Valider"  ajax="false" />
+    <p:commandButton id="returnButton" action="UtilisateurList?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" value="Annuler" />  
+</p:fieldset>
+           </center>
+</h:form>
+
+</ui:define>
+		
+	
+</ui:composition>/html>
